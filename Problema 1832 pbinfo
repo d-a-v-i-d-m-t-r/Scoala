@@ -1,0 +1,64 @@
+#include <iostream>
+#include <cstring>
+#include <stdlib.h>
+using namespace std;
+int s,p;
+int x[99];
+int w = 0;
+
+int valid(int k) {
+    if(k>=2 && x[k-1]>=x[k])
+    return 0;
+    if(produs(k)>s)
+    return 0;
+    return 1;
+}
+
+int produs(int k)
+{
+    if(k==1)
+        if(s%x[k]==0)
+            return x[k];
+    if(s%x[k]==0)
+        return x[k]*produs(x[k-1]);
+    else
+        return 0;
+}
+
+int sol(int k) {
+        if(produs(k)==s)
+            return 1;
+        else
+            return 0;
+}
+
+void afis(int k) {
+    for (int i = 1; i <= k; i++){
+
+        cout <<x[i]<<"* ";
+    }
+    cout << "\n";
+    w++;
+}
+
+void back(int k) {
+    x[k] = 1;
+    while (x[k] < s-1) {
+        x[k]++;
+        if (valid(k))
+            if (sol(k))
+                afis(k);
+            else
+                back(k + 1);
+    }
+}
+
+int main()
+{
+    cout<<"s=";cin>>s;
+    back(1);
+    cout << w;
+    if(w==0)
+    cout<<"NU EXISTA";
+    return 0;
+}
