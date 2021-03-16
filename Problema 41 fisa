@@ -1,0 +1,59 @@
+#include <iostream>
+using namespace std;
+int  p,n,a,b,s;
+int x[99];
+int w = 0;
+
+
+
+int valid(int k) {
+    if(k>=2 && x[k-1]>=x[k])
+        return 0;
+return 1;
+}
+
+int sol(int k) {
+    s=0;
+    for (int i = 1; i <= k; i++)
+                    {
+                        s=s+x[i];
+                    }
+                    if(s>=a && s<=b)
+                        return 1;
+                    else
+                        return 0;
+}
+
+void afis(int k) {
+    for (int i = 1; i <= k; i++)
+cout << x[i]<<" ";
+        cout << "\n";
+            w++;
+}
+
+void back(int k) {
+x[k] = 0;
+    while (x[k] < n) {
+            x[k]++;
+            if (valid(k))
+            {
+                    if (sol(k))
+                    afis(k);
+                else
+    back(k + 1);
+}
+            }
+
+}
+int main()
+{
+cout <<"Minimul pentru supravietuire =";
+cin>>a;
+cout <<"Maximul pentru supravietuire =";
+cin>>b;
+cout << "Numarul maxim de lucruri din sac =";
+cin>>n;
+back(1);
+cout<<"Numarul de posibilitati generate="<<w;
+return 0;
+}
