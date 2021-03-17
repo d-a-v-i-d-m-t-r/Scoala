@@ -10,7 +10,7 @@ int v[99];
 int valid(int k) {
     if(x[k] % 2 != 0)
     return 0;
-    if(k>=2 && x[k-1] >= x[k])
+    if(k>=2 && x[k-1] > x[k])
     return 0;
 return 1;
 }
