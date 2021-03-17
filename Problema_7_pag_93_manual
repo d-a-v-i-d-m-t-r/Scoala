@@ -1,0 +1,72 @@
+#include <iostream>
+using namespace std;
+int  p,n,nc;
+//nc e numarul de cifre din multime
+//n e numarul dat
+int x[99];
+int w = 0;
+int v[99];
+
+int nr_format(int k)
+{ int nr=0;
+    for(int i=1;i<=k;i++)
+        nr=nr*10+v[x[i]];
+    return nr;
+}
+
+int nrc(int x)
+{
+    if(x==0)
+    return 0;
+    else
+    return 1 + nrc(x/10);
+}
+int valid(int k) {
+    if(k==1 && v[x[k]]==0)
+    return 0;
+    if(nr_format(k)>n)
+        return 0;
+return 1;
+}
+
+int sol(int k) {
+return nr_format(k) < n && k==p;
+}
+
+void afis(int k) {
+for (int i = 1; i <= k; i++)
+        cout << v[x[i]];
+        cout << "\n";
+            w++;
+}
+
+void back(int k) {
+x[k] = 0;
+    while (x[k] < nc && k<=nrc(n)) {
+            x[k]++;
+            if (valid(k))
+                if (sol(k))
+                    afis(k);
+                else
+ back(k + 1);
+}
+}
+
+int main()
+{
+cout << "Numarul de cifre=";
+cin>>nc;
+cout<<"Cifrele sunt:"<<endl;
+for(int i=1;i<=nc;i++)
+    cin>>v[i];
+cout<<"Numarul este:";
+cin>>n;
+
+for(int i=1;i<=n;i++)
+{p=i;
+back(1);
+}
+cout<<"Numarul de numere generate="<<w;
+return 0;
+}
+//16 min 52 sec
