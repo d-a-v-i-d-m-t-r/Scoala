@@ -1,0 +1,52 @@
+#include <iostream>
+using namespace std;
+int  p,n;
+//n e numarul dat
+int x[99];
+int w = 0;
+int v[99];
+
+
+int valid(int k) {
+    if(x[k] % 2 != 0)
+    return 0;
+    if(k>=2 && x[k-1] >= x[k])
+    return 0;
+return 1;
+}
+
+int sol(int k) {
+ return k==p;
+}
+
+void afis(int k) {
+for (int i = 1; i <= k; i++)
+        cout << x[i];
+        cout << "\n";
+            w++;
+}
+
+void back(int k) {
+x[k] = 0;
+    while (x[k] < 8 && k < n) {
+            x[k]++;
+            if (valid(k))
+                if (sol(k))
+                    afis(k);
+                else
+ back(k + 1);
+}
+}
+
+int main()
+{
+cout<<"Numarul maxim de cifre al numerelor este:";
+cin>>n;
+for(int i=1;i<=n;i++)
+{p=i;
+back(1);
+}
+cout<<"Numarul de numere generate="<<w;
+return 0;
+}
+//5 min 58 sec
