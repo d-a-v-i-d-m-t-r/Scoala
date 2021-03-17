@@ -16,18 +16,18 @@ int nr_format(int k)
     return nr;
 }
 
-int nrc(int s)
+int nrc(int a)
 {
-    if(s==0)
+    if(a==0)
       return 0;
     else
-      return 1 + nrc(s/10);
+      return 1 + nrc(a/10);
 }
 int valid(int k)
 {
     if(k==1 && v[s[k]]==0)
       return 0;
-    if(nr_format(k)>=n)
+    if(nr_format(k)>=x)
         return 0;
     return 1;
 }
