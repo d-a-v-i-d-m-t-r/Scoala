@@ -1,0 +1,318 @@
+#include <iostream>
+#include <cstring>
+#include <fstream>
+
+using namespace std;
+
+int n;
+int decizie;
+//int suma = 0;
+int a;
+int an;
+
+
+struct carte {
+    char titlu[30];
+    char autor[30];
+    int an;
+    char editura[30];
+}carti[100];
+
+void unu() {
+    char temp[30];
+    //stergeecran();
+    cout << "**CITIRE PRODUSE**";
+    cout<<endl;
+    cout<<endl;
+    cout << "Numar de carti: ";
+    cin >> n;
+    cout<<endl;
+    for (int i = 0; i < n; i++) {
+        //stergeecran();
+        cout << "Elementul al " << i+1<<"-lea: ";
+        cout<<endl;
+        cout << "titlu: ";
+        cin.get();
+        cin.getline(carti[i].titlu, 30);
+        cout << "autor: ";
+        cin.get();
+        cin.getline(carti[i].autor, 30);
+        cout << "an: ";
+        cin >> carti[i].an;
+        cout << "editura: ";
+        cin.get();
+        cin.getline(carti[i].editura, 30);
+
+    }
+    cout << "PRODUSELE AU FOST CITITE!";
+    cout<<endl;
+    //system("pause");
+    //meniu();
+}
+
+void doi() {
+    //stergeecran();
+    cout << "**AFISARE CARTI**";
+    cout<<endl;
+    for (int i = 0; i < n; i++) {
+        cout << i+1 << ". -" << carti[i].titlu << " " << carti[i].autor << " " << carti[i].an << " " << carti[i].editura;
+        cout<<endl;
+    }
+    //system("pause");
+    //meniu();
+    cout << endl;
+}
+
+void trei() {
+    //stergeecran();
+    cout << "**ADAUGAREA UNEI CARTI**";
+    cout << endl;
+    n++;
+    int i = n - 1;
+    cout << "titlu: ";
+    cin.get();
+    cin.getline(carti[i].titlu, 30);
+    cout << "autor: ";
+    cin.getline(carti[i].autor, 30);
+    cout << "an: ";
+    cin >> carti[i].an;
+    cout << "editura: ";
+    cin.get();
+    cin.getline(carti[i].editura, 30);
+    //system("pause");
+    //meniu();
+    cout << endl;
+    cout << endl;
+}
+
+void patru() {
+    //stergeecran();
+    cout << "**AFISAREA LISTEI CARTILOR UNUI AUTOR**";
+    cout<<endl;
+    cout << "Introduceti autorul: ";
+    char autor[30];
+    cin.get();
+    cin.get(autor, 30);
+    int k = 1;
+    //stergeecran();
+    for (int i = 0; i < n; i++) {
+        if (strcmp(carti[i].autor, autor) == 0) {
+            cout << k++ << ". " << carti[i].titlu << " " << carti[i].an << " " << carti[i].editura;
+            cout<<endl;
+        }
+    }
+    //system("pause");
+    //meniu();
+    cout << endl;
+    cout << endl;
+}
+
+void cinci() {
+    //stergeecran();
+    cout << "**ORDONAREA CARTILOR DE LA EDITURA NEMIRA**";
+    cout << endl;
+    /*char editura[30] = "nemiraNEMIRANemira";
+    for (int i = 0; i < n-1; i++) {
+        for (int j = i + 1; j < n; j++) {
+            if (strstr(carti[i].editura, editura) && strstr(carti[j].editura, editura)) {
+                if (strcmp(carti[i].titlu, carti[j].titlu) > 0) {
+                    carte aux;
+                    aux = carti[i];
+                    carti[i] = carti[j];
+                    carti[j]= aux;
+                }
+            }
+        }
+    }
+    for (int i = 0; i < n; i++) {
+        if (strstr(carti[i].editura, editura)) {
+            cout << i + 1 << ". " << carti[i].titlu << " " << carti[i].autor << " " << carti[i].an;
+            cout << endl;
+        }
+
+    }
+    */
+    for(int i=0; i<n-1; i++)
+    {
+      for(int j=i+1; j<n; j++)
+        {
+          if(strcmp(carti[i].titlu,carti[j].titlu)>0)
+            {
+              carte aux;
+              aux=carti[i];
+              carti[i]=carti[j];
+              carti[j]=aux;
+            }
+        }
+    }
+    //cout << " Cartile cu editura Nemira sunt : " << endl;
+    for(int i=0; i<n; i++)
+      if(strcmp(carti[i].editura,"Nemira")==0)
+        cout << carti[i].titlu << endl;
+    cout<<endl;
+    cout<<endl;
+    //cout<<endl;
+    //system("pause");
+    //meniu();
+
+}
+
+void sase() {
+    //stergeecran();
+    cout << "**AFISAREA CARTILOR APARUTE DUPA UN ANUMIT AN**";
+    cout << endl;
+    cout << "Introduceti anul dorit: ";
+    cin >> an;
+    for (int i = 0; i < n; i++) {
+        if (carti[i].an == an) {
+            cout << i + 1 << ". " << carti[i].titlu << " " << carti[i].autor;
+            cout << endl;
+        }
+    }
+    //system("pause");
+    //meniu();
+    cout << endl;
+    cout << endl;
+}
+
+void sapte() {
+    //stergeecran();
+    cout << "**CEA MAI VECHE CARTE**";
+    cout<<endl;
+    //system("pause");
+    //meniu();
+
+    for(int i=0; i<n-1; i++)
+    {
+      for(int j=i+1; j<n; j++)
+      {
+        if(carti[i].an>carti[j].an)
+        {
+          carte aux;
+          aux=carti[i];
+          carti[i]=carti[j];
+          carti[j]=aux;
+        }
+      }
+    }
+    for(int i=0; i<1; i++)
+    {
+      cout << " Cea mai veche carte este : " << carti[i].titlu;
+    }
+    cout << endl;
+    cout << endl;
+}
+
+void opt() {
+    int sters;
+    //stergeecran();
+    cout << "**STERGERE CARTE DINTR-UN AN**";
+    cout<<endl;
+    cout << "Introduceti anul: ";
+    cin >> sters;
+    //stergeecran();
+    for (int i = 0; i < n; i++) {
+        if(carti[i].an==sters)
+                for (int j = i; j < n - 1; j++) {
+                    carti[j] = carti[j + 1];
+                }
+                n--;
+    }
+    cout << "STERGEREA S-A EFECTUAT CU SUCCES!";
+    cout<<endl;
+    //system("pause");
+    //meniu();
+    cout << endl;
+    cout << endl;
+}
+
+void noua() {
+    //stergeecran();
+    cout << "**MEMBRII ECHIPEI**";
+    cout<<endl;
+    cout << "Prelipcean Iuliana";
+    cout<<endl;
+    cout << "Sorodoc Eusebiu";
+    cout<<endl;
+    cout << "Stirbu Stefan";
+    cout<<endl;
+    //system("pause");
+    //meniu();
+    cout << endl;
+}
+
+
+
+int main()
+{
+   do {
+      //stergeecran();
+      cout << "**MENIU PRINCIPAL**";
+      cout<<endl;
+      cout<<endl;
+      cout<<endl;
+      cout << "1. Citirea informatiilor referitoare la cartile din biblioteca";cout<<endl;
+      cout << "2. Afisarea cartilor din biblioteca"; cout<<endl;
+      cout << "3. Adaugarea in biblioteca a unei noi carti"; cout<<endl;
+      cout << "4. Afisarea listei cartilor scrise de un anumit autor citit de la tastatura."; cout<<endl;
+      cout << "5. Afisarea listei cartilor aparute la editura Nemira ordonate alfabetic."; cout<<endl;
+      cout << "6. Afisarea titlului si autorului cartilor aparute dupa un anumit an citit de la tastatura"; cout<<endl;
+      cout << "7. Afisarea celei mai vechi carti din biblioteca"; cout<<endl;
+      cout << "8. Stergerea cartilor aparute in anul x, x citit de la tastatura."; cout<<endl;
+      cout << "9. Afisarea membrilor echipei"; cout<<endl;
+      cout << "10. Iesire din program"; cout<<endl;
+
+      cout << endl;
+      cout << " Alege optiunea : ";cin >> decizie;
+
+        switch (decizie) {
+        case 1: {
+            unu();
+            break;
+        }
+        case 2: {
+            doi();
+            break;
+        }
+        case 3: {
+            trei();
+            break;
+        }
+        case 4: {
+            patru();
+            break;
+        }
+        case 5: {
+            cinci();
+            break;
+        }
+        case 6: {
+            sase();
+            break;
+        }
+        case 7: {
+            sapte();
+            break;
+        }
+        case 8: {
+            opt();
+            break;
+        }
+        case 9: {
+            noua();
+            break;
+        }
+        case 10:
+            break;
+        default: {
+            cout << "OPTIUNE INEXISTENTA!";
+            cout<<endl;
+            //system("pause");
+            //meniu();
+            }
+        }
+    } while (decizie!=10);
+    //stergeecran();
+    cout << "PROGRAM INCHIS";
+    return 0;
+}
