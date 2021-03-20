@@ -35,7 +35,6 @@ void unu() {
         cin.get();
         cin.getline(carti[i].titlu, 30);
         cout << "autor: ";
-        cin.get();
         cin.getline(carti[i].autor, 30);
         cout << "an: ";
         cin >> carti[i].an;
