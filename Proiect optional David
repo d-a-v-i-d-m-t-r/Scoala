@@ -1,0 +1,231 @@
+#include <iostream>
+#include <cstring>
+#include <fstream>
+using namespace std;
+
+struct apartament
+{
+int nr_apartament, nr_persoane;
+float val_apa_rece, val_apa_calda;
+char nume[20];
+} ap[30];
+
+int n;
+char sp[6]="     ";
+ifstream f("lista_apartamente.txt");
+ofstream g;
+apartament aux;
+int nr_cerinta;
+
+void meniu()
+{
+cout<<endl<<"          "<<" Meniu"<<endl<<endl;
+cout<<"-----------------------------"<<endl<<endl;
+cout<<" 1) Citire apartamente"<<endl<<endl;
+cout<<" 2) Lista apartamente"<<endl<<endl;
+cout<<" 3) Lista valorilor de plata pentru fiecare apartament"<<endl<<endl;
+cout<<" 4) Ordonare descrescatoare dupa valoarea platii"<<endl<<endl;
+cout<<" 5) Stergere proprietar"<<endl<<endl;
+cout<<" 6) Adaugare proprietar"<<endl<<endl;
+cout<<" 7) Proprietarul cu cea mai mica suma de plata"<<endl<<endl;
+cout<<" 8) Valoarea totala a platii pe luna"<<endl<<endl;
+cout<<" 9) Membrii echipei"<<endl<<endl;
+cout<<"10) Iesire din program"<<endl<<endl;
+cout<<"-----------------------------"<<endl<<endl;
+}
+
+void citire_apartamente()
+{
+      f>>n;
+    for(int i=0;i<n;i++)
+    {
+        f>>ap[i].nr_apartament;
+        f>>ap[i].nume;
+        f>>ap[i].nr_persoane;
+        f>>ap[i].val_apa_rece;
+        f>>ap[i].val_apa_calda;
+    }
+    cout<<"Citirea s-a efectuat cu succes!"<<endl;
+}
+
+void lista_apartamente()
+{
+     g<<"Index"<<sp<<"Nr. apartament"<<sp<<"Proprietar"<<sp<<"Nr. locuitori"<<sp<<"Valoare apa rece"<<sp<<"Valoare apa calda"<<endl;
+    for(int i=0;i<n;i++)
+    {
+        g<<"  "<<i+1<<"              ";
+        g<<ap[i].nr_apartament<<"           ";
+        g<<ap[i].nume<<"                 ";
+        g<<ap[i].nr_persoane<<"                ";
+        g<<ap[i].val_apa_rece<<" "<<"lei"<<"                 ";
+        g<<ap[i].val_apa_calda<<" "<<"lei"<<endl;
+    }
+    cout<<"Afisarea s-a efectuat cu succes!"<<endl;
+}
+
+void lista_val_plata()
+{
+    for(int i=0;i<n;i++)
+    {g<<"Apartament nr."<<i+1<<endl;
+    g<<sp<<"Valoare totala de plata: "; cout<<ap[i].val_apa_rece + ap[i].val_apa_calda; cout<<" "<<"lei"<<endl;
+    g<<sp<<sp<<"Valoare apa rece: "; cout<<ap[i].val_apa_rece; cout<<" "<<"lei"<<endl;
+    g<<sp<<sp<<"Valoare apa calda: "; cout<<ap[i].val_apa_calda; cout<<" "<<"lei"<<endl<<endl;
+}
+cout<<"Valoarea a fost afisata cu succes!"<<endl;
+}
+
+int val_plata(int i)
+{
+    return ap[i].val_apa_rece+ap[i].val_apa_calda;
+}
+
+void ordonare()
+{
+    for(int i=0;i<n-1;i++)
+    { for(int j=i+1;j<n;j++)
+        if(val_plata(i)<val_plata(j))
+        {
+            aux=ap[i];
+            ap[i]=ap[j];
+            ap[j]=aux;
+        }
+        else if(val_plata(i)==val_plata(j))
+              if(strcmp(ap[i].nume , ap[j].nume)>0)
+              {
+                aux=ap[i];
+                ap[i]=ap[j];
+                ap[j]=aux;
+              }
+}
+cout<<"Ordonare realizata cu succes!"<<endl;
+}
+
+void cerinta()
+{
+    cout<<endl;
+    cout<<endl<<"Introduceti numarul corespunzator cerintei"<<endl;
+    cin>>nr_cerinta;
+}
+void stergere()
+{ int ok=0;
+    char nume_proprietar[20];
+    cout<<"Introduceti numele proprietarului care va fi sters din baza de date: ";cin.get();
+    cin.getline(nume_proprietar,20);
+    for(int i=0;i<n-1;i++)
+    {
+        if(strcmp(ap[i].nume,nume_proprietar)==0)
+         {
+             for(int j=i;j<n-1;i++)
+                ap[j]=ap[j+1];
+                n--;
+                ok=1;
+         }
+         if(ok==1)
+         cout<<"Stergerea s-a efectuat cu succes!"<<endl;
+         else
+         cout<<"Proprietarul nu se afla in baza de date!"<<endl;
+     }
+     }
+
+
+
+void adaugare()
+{
+    cout<<"Introduceti datele noului apartament:"<<endl;
+    cout<<sp<<"Nr. apartament: "; cin>>ap[n].nr_apartament; cout<<endl;
+    cout<<sp<<"Nume proprietar: "; cin.get(); cin.getline(ap[n].nume,20); cout<<endl;
+    cout<<sp<<"Nr. persoane: "; cin>>ap[n].nr_persoane; cout<<endl;
+    cout<<sp<<"Valoare apa rece: "; cin>>ap[n].val_apa_rece; cout<<endl;
+    cout<<sp<<"Valoare apa calda: "; cin>>ap[n].val_apa_calda; cout<<endl;
+    g<<"PROPRIETAR NOU:"<<endl;
+    g<<"  "<<n<<"              ";
+    g<<ap[n].nr_apartament<<"           ";
+    g<<ap[n].nume<<"                 ";
+    g<<ap[n].nr_persoane<<"                ";
+    g<<ap[n].val_apa_rece<<" "<<"lei"<<"                 ";
+    g<<ap[n].val_apa_calda<<" "<<"lei"<<endl;
+    cout<<"Proprietarul a fost adaugat cu succes!"<<endl;
+    n++;
+}
+
+void  suma_minima()
+{
+    for(int i=0;i<n-1;i++)
+    { for(int j=i+1;j<n;j++)
+        if(val_plata(i)<val_plata(j))
+        {
+            aux=ap[i];
+            ap[i]=ap[j];
+            ap[j]=aux;
+        }
+    }
+g<<"Proprietarul cu cea mai mica suma de plata este: "<<ap[n-1].nume<<", proprietaul apartamentului "<<ap[n-1].nr_apartament<<endl;
+cout<<"Proprietarul cu cea mai mica suma de plata a fost afisat cu succes!"<<endl;
+}
+
+void cheltuieli_totale()
+{
+    int s=0;
+    for(int i=0;i<n;i++)
+        s+=(ap[i].val_apa_rece + ap[i].val_apa_calda);
+    g<<"Cheltuielile totale pe luna curenta au o valoare de "<<s<<" lei.";
+    cout<<"Valoarea cheltuielilor totale a fost afisata cu succes"<<endl;
+}
+
+void membri()
+{
+    cout<<"Proiect realizat de:"<<endl<<endl;
+    cout<<sp<<"Isopescu Emanuela"<<endl;
+    cout<<sp<<"Mitric David"<<endl;
+    cout<<sp<<"Moisiuc Raluca"<<endl<<endl;
+    cout<<"Clasa a XI-a B"<<endl;
+}
+
+int main()
+{
+    g.open("lista_noua_apartamente.txt",ios::app);
+meniu();
+cerinta();
+do{
+    meniu();
+    cerinta();
+switch(nr_cerinta)
+{
+  case 1:
+     {citire_apartamente();
+        break;}
+  case 2:
+      { lista_apartamente();
+       break;}
+  case 3:
+      { lista_val_plata();
+       break;}
+  case 4:
+      { ordonare();
+       break;}
+  case 5:
+      { stergere();
+       break;}
+  case 6:
+      { adaugare();
+       break;}
+  case 7:
+      { suma_minima();
+       break;}
+  case 8:
+        {cheltuieli_totale();
+        break;}
+  case 9:
+    {    membri();
+        break;}
+  case 10:
+        {
+        cout<<"Programul s-a incheiat cu succes!"<<endl;
+        return 0;
+        }
+  default: cout<<"Optiune inexistenta!"<<endl;
+}
+}while(nr_cerinta!=10);
+
+      return 0;
+  }
