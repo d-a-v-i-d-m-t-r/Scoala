@@ -1,0 +1,59 @@
+#include <iostream>
+using namespace std;
+int  p,n,k1;
+int x[99];
+int w = 0;
+
+int nrck(int k)
+{int nr=0;
+    for(int i=1;i<=k;i++)
+    if(x[i]==k1)
+    nr++;
+}
+int valid(int k) {
+    if(nrck(k)>p)
+    return 0;
+    if(k==1 && x[k]==0)
+    return 0;
+return 1;
+}
+
+int sol(int k) {
+  if(k==n && nrck(k)==p)
+      return 1;
+   else
+       return 0;
+}
+
+void afis(int k) {
+    for (int i = 1; i <= k; i++)
+cout << x[i];
+        cout << "\n";
+            w++;
+}
+
+void back(int k) {
+x[k] = -1;
+    while (x[k] < 9 && k < n) {
+            x[k]++;
+            if (valid(k))
+            {
+                if (sol(k))
+                    afis(k);
+                else
+    back(k + 1);
+}
+}
+}
+int main()
+{
+cout <<"n = ";
+cin>>n;
+cout <<"p = ";
+cin>>p;
+cout <<"k1 = ";
+cin>>k1;
+back(1);
+cout<<w;
+return 0;
+}
