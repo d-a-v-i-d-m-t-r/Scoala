@@ -1,0 +1,59 @@
+//just imposible;
+//or???
+#include <iostream>
+using namespace std;
+int  n,m;
+int x[99];
+int w = 0;
+int L[99];
+int C[99];
+
+int valid(int k) {
+    if(k>=2 && C[x[k-1]] == C[x[k]])
+    return 0;
+
+    if(k>=2 && L[x[k-1]] <= L[x[k]])
+    return 0;
+
+    return 1;
+}
+
+int sol(int k) {
+return k==m;
+}
+
+void afis(int k) {
+    for(int i=1;i<=k;i++)
+        cout <<"cub "<<x[i]<<" ";
+        cout << "\n";
+            w++;
+}
+
+void back(int k) {
+x[k] = 0;
+    while (x[k] < n ) {
+            x[k]++;
+            if (valid(k))
+                if (sol(k))
+                    afis(k);
+                else
+ back(k + 1);
+}
+}
+
+int main()
+{
+cout << "Numarul de cuburi=";
+cin>>n;
+cout<<"Inaltimea turnurilor=";
+cin>>m;
+cout<<"Marimile laturilor sunt:"<<endl;
+for(int i=1;i<=n;i++)
+    cin>>L[i];
+cout<<"Culorile cuburilor sunt:"<<endl;
+for(int i=1;i<=n;i++)
+    cin>>L[i];
+back(1);
+cout<<"Numarul de turnuri generate="<<w;
+return 0;
+}
