@@ -1,0 +1,90 @@
+#include <iostream>
+using namespace std;
+int  p,n;
+int x[99];
+int w = 0;
+
+int nr_format(int k)
+{
+    int nr=0;
+    for(int i=1;i<=k;i++)
+        nr=nr*10+x[i];
+    return nr;
+}
+
+int nrb2(int x)
+{
+        int nrb = 0, p = 1;
+        while(x != 0)
+        {
+            nrb = nrb + (x%2) * p;
+            p = p* 10;
+            x/=2;
+        }
+        return nrb;
+    }
+
+int nrc0(int x)
+{
+if(x>0)
+    {if(x%10==0)
+        return 1+nrc0(x/10);
+    else
+        return nrc0(x/10);
+    }
+else
+        return 0;
+}
+
+int nrc1(int x)
+{
+if(x>0)
+    {if(x%10==1)
+        return 1+nrc1(x/10);
+    else
+        return nrc1(x/10);
+    }
+else
+        return 0;
+}
+
+
+int valid(int k) {
+
+  return nrc0(nrb2(nr_format(k)))>nrc0(nrb2(n)) || nrc1(nrb2(nr_format(k)))>nrc1(nrb2(n));
+
+}
+
+int sol(int k) {
+    return nrc0(nrb2(nr_format(k)))==nrc0(nrb2(n)) && nrc1(nrb2(nr_format(k)))==nrc1(nrb2(n)) ;
+}
+
+void afis(int k) {
+    for (int i = 1; i <= k; i++)
+cout << x[i];
+        cout << "\n";
+            w++;
+}
+
+void back(int k) {
+x[k] = -1;
+    while (x[k] < 9 && k < 10) {
+            x[k]++;
+            if (valid(k))
+            {
+                    if (sol(k))
+                    afis(k);
+                else
+    back(k + 1);
+}
+}
+}
+
+int main()
+{
+cout <<"n = ";
+cin>>n;
+back(1);
+cout<<"Nr sol e "<<w;
+return 0;
+}
